@@ -7,10 +7,10 @@ import java.util.Hashtable;
 import java.util.PriorityQueue;
 
 
-public class UCS {
+public class ASTAR {
 
     public void search(Node startNode) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>(1, Comparator.comparingInt(Node::pathCost));
+        PriorityQueue<Node> frontier = new PriorityQueue<>(1, Comparator.comparingInt(Node::sum).reversed());
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
 
         if (startNode.isGoal()) {

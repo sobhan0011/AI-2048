@@ -105,21 +105,16 @@ public class Board {
 
     public boolean canMoveTo(int i, int j, Movement direction) {
         switch (direction) {
-            case LEFT -> {
+            case LEFT:
                 return j > 0;
-            }
-            case RIGHT -> {
+            case RIGHT:
                 return j < col - 1;
-            }
-            case DOWN -> {
+        case DOWN:
                 return i < row - 1;
-            }
-            case UP -> {
+            case UP:
                 return i > 0;
-            }
-            default -> {
+            default:
                 return false;
-            }
         }
     }
 

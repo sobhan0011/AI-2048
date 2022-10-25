@@ -3,6 +3,7 @@ package model;
 import core.Constants;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class Node {
     Board board;
@@ -45,17 +46,37 @@ public class Node {
         int value;
         switch (this.previousMovement)
         {
-            case LEFT -> value = 1;
-            case RIGHT -> value = 3;
-            case DOWN -> value = 5;
-            default -> value = 7;
+            case LEFT:
+                value = 1;
+                break;
+            case RIGHT:
+                value = 3;
+                break;
+            case DOWN:
+                value = 5;
+                break;
+            default:
+                value = 7;
+                break;
         }
         return this.getParent().pathCost() + value;
     }
 
     public int heuristic() {
-        // TODO: 2/16/2022 implement heuristic function
-        return 0;
+        int sumOfCorners = this.board.cells[0][0] +
+                this.board.cells[0][this.board.col - 1] +
+                this.board.cells[this.board.row - 1][0] +
+                this.board.cells[this.board.row - 1][this.board.col - 1];
+        int zeroCounter = 0;
+        for (int i = 0; i < this.board.row; i++)
+            for (int j = 0; j < this.board.col; j++)
+                if (this.board.cells[i][j] == 0)
+                    zeroCounter += 1;
+
+        return  sumOfCorners + zeroCounter;
+    }
+    public int sum() {
+        return heuristic() + pathCost();
     }
 
     public String hash() {

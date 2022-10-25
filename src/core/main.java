@@ -1,9 +1,6 @@
 package core;
 
-import ai.BFS;
-import ai.DFS;
-import ai.IDS;
-import ai.UCS;
+import ai.*;
 import model.Board;
 import model.Node;
 
@@ -38,17 +35,23 @@ public class main {
 
         Hashtable<String, Boolean> initHash = new Hashtable<>();
         Node start = new Node(gameBoard, null, NONE);
-        System.out.println("\nDFS Answer :");
-        DFS dfs = new DFS();
-        dfs.search(start);
+       // System.out.println("\nDFS Answer :");
+        /*DFS dfs = new DFS();
+        dfs.search(start);*/
         System.out.println("\nBFS Answer :");
         BFS bfs = new BFS();
         bfs.search(start);
-        System.out.println("\nIDS Answer :");
+        /*System.out.println("\nIDS Answer :");
         IDS ids = new IDS();
         ids.search(start);
         System.out.println("\nUCS Answer :");
         UCS ucs = new UCS();
-        ucs.search(start);
+        ucs.search(start);*/
+        System.out.println("\nASTAR Answer :");
+        ASTAR astar = new ASTAR();
+        astar.search(start);
+        System.out.println("\nGBFS Answer :");
+        GBFS gbfs = new GBFS();
+        gbfs.search(start);
     }
 }

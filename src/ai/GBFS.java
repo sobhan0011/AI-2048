@@ -1,17 +1,18 @@
 package ai;
 
 import model.Node;
-
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.PriorityQueue;
 
-public class BFS {
+
+public class GBFS {
 
     public void search(Node startNode) {
-        Queue<Node> frontier = new LinkedList<Node>();
+        PriorityQueue<Node> frontier = new PriorityQueue<>(1, Comparator.comparingInt(Node::heuristic).reversed());
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
+        Hashtable<String, Boolean> inExplore = new Hashtable<>();
         if (startNode.isGoal()) {
             System.out.println("you win!");
             printResult(startNode, 0);
@@ -24,7 +25,7 @@ public class BFS {
             inFrontier.remove(temp.hash());
             ArrayList<Node> children = temp.successor();
             for (Node child : children) {
-                if (!(inFrontier.containsKey(child.hash()))) {
+                if (!(inFrontier.containsKey(child.hash())) && !(inExplore.containsKey(child.hash()))) {
                     if (child.isGoal()) {
                         printResult(child, 0);
                         System.out.println("you win !!!");
@@ -34,6 +35,7 @@ public class BFS {
                     inFrontier.put(child.hash(), true);
                 }
             }
+            inExplore.put(children.get(0).getParent().hash(), true);
         }
         System.out.println("no solution");
     }
