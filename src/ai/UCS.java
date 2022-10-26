@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
 public class UCS {
 
     public void search(Node startNode) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>(1, Comparator.comparingInt(Node::pathCost));
+        PriorityQueue<Node> frontier = new PriorityQueue<>(100, Comparator.comparingInt(Node::pathCost));
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
 
         if (startNode.isGoal()) {

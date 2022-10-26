@@ -3,7 +3,9 @@ package model;
 import core.Constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 public class Node {
     Board board;
@@ -62,21 +64,33 @@ public class Node {
         return this.getParent().pathCost() + value;
     }
 
-    public int heuristic() {
+    public double heuristic() {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < this.board.row; i++) {
+            for (int j = 0; j < this.board.col; j++) {
+                if (map.containsKey(this.board.cells[i][j]))
+                    map.put(this.board.cells[i][j], map.get(this.board.cells[i][j]) + 1);
+                else
+                    map.put(this.board.cells[i][j], 1);
+            }
+        }
+        int duplicateCounter = map.values().stream().reduce(0, Integer::sum);
+
         int sumOfCorners = this.board.cells[0][0] +
                 this.board.cells[0][this.board.col - 1] +
                 this.board.cells[this.board.row - 1][0] +
                 this.board.cells[this.board.row - 1][this.board.col - 1];
+
         int zeroCounter = 0;
         for (int i = 0; i < this.board.row; i++)
             for (int j = 0; j < this.board.col; j++)
                 if (this.board.cells[i][j] == 0)
                     zeroCounter += 1;
 
-        return  sumOfCorners + zeroCounter;
+        return  sumOfCorners + zeroCounter + (0.1 * duplicateCounter);
     }
-    public int sum() {
-        return heuristic() + pathCost();
+    public double sum() {
+        return heuristic() - (0.9 * pathCost());
     }
 
     public String hash() {

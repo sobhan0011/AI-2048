@@ -10,9 +10,10 @@ import java.util.PriorityQueue;
 public class GBFS {
 
     public void search(Node startNode) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>(1, Comparator.comparingInt(Node::heuristic).reversed());
+        PriorityQueue<Node> frontier = new PriorityQueue<>(100, Comparator.comparingDouble(Node::heuristic).reversed());
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
         Hashtable<String, Boolean> inExplore = new Hashtable<>();
+        int whileCounter = 0;
         if (startNode.isGoal()) {
             System.out.println("you win!");
             printResult(startNode, 0);
@@ -21,6 +22,7 @@ public class GBFS {
         frontier.add(startNode);
         inFrontier.put(startNode.hash(), true);
         while (!frontier.isEmpty()) {
+            whileCounter += 1;
             Node temp = frontier.poll();
             inFrontier.remove(temp.hash());
             ArrayList<Node> children = temp.successor();
@@ -28,7 +30,7 @@ public class GBFS {
                 if (!(inFrontier.containsKey(child.hash())) && !(inExplore.containsKey(child.hash()))) {
                     if (child.isGoal()) {
                         printResult(child, 0);
-                        System.out.println("you win !!!");
+                        System.out.println("you win !!! " + whileCounter);
                         return;
                     }
                     frontier.add(child);

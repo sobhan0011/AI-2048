@@ -10,9 +10,9 @@ import java.util.PriorityQueue;
 public class ASTAR {
 
     public void search(Node startNode) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>(1, Comparator.comparingInt(Node::sum).reversed());
+        PriorityQueue<Node> frontier = new PriorityQueue<>(100, Comparator.comparingDouble(Node::sum).reversed());
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
-
+        int whileCounter = 0;
         if (startNode.isGoal()) {
             System.out.println("you win!");
             printResult(startNode, 0);
@@ -21,6 +21,7 @@ public class ASTAR {
         frontier.add(startNode);
         inFrontier.put(startNode.hash(), true);
         while (!frontier.isEmpty()) {
+            whileCounter += 1;
             Node temp = frontier.poll();
             inFrontier.remove(temp.hash());
             ArrayList<Node> children = temp.successor();
@@ -28,7 +29,7 @@ public class ASTAR {
                 if (!(inFrontier.containsKey(child.hash()))) {
                     if (child.isGoal()) {
                         printResult(child, 0);
-                        System.out.println("you win !!!");
+                        System.out.println("you win !!! " + whileCounter);
                         return;
                     }
                     frontier.add(child);

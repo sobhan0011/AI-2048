@@ -10,8 +10,9 @@ import java.util.Queue;
 public class BFS {
 
     public void search(Node startNode) {
-        Queue<Node> frontier = new LinkedList<Node>();
+        Queue<Node> frontier = new LinkedList<>();
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
+        int whileCounter = 0;
         if (startNode.isGoal()) {
             System.out.println("you win!");
             printResult(startNode, 0);
@@ -20,6 +21,7 @@ public class BFS {
         frontier.add(startNode);
         inFrontier.put(startNode.hash(), true);
         while (!frontier.isEmpty()) {
+            whileCounter += 1;
             Node temp = frontier.poll();
             inFrontier.remove(temp.hash());
             ArrayList<Node> children = temp.successor();
@@ -27,7 +29,7 @@ public class BFS {
                 if (!(inFrontier.containsKey(child.hash()))) {
                     if (child.isGoal()) {
                         printResult(child, 0);
-                        System.out.println("you win !!!");
+                        System.out.println("you win !!! " + whileCounter);
                         return;
                     }
                     frontier.add(child);
