@@ -14,7 +14,7 @@ public class BFS {
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
         int whileCounter = 0;
         if (startNode.isGoal()) {
-            System.out.println("you win!");
+            System.out.println("you win !!!");
             printResult(startNode, 0);
             return;
         }

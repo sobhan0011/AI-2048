@@ -45,26 +45,16 @@ public class Node {
     public int pathCost() {
         if (this.getParent() == null)
             return 0;
-        int value;
-        switch (this.previousMovement)
-        {
-            case LEFT:
-                value = 1;
-                break;
-            case RIGHT:
-                value = 3;
-                break;
-            case DOWN:
-                value = 5;
-                break;
-            default:
-                value = 7;
-                break;
-        }
+        int value = switch (this.previousMovement) {
+            case LEFT -> 1;
+            case RIGHT -> 3;
+            case DOWN -> 5;
+            default -> 7;
+        };
         return this.getParent().pathCost() + value;
     }
 
-    public double heuristic() {
+    public int heuristic() {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < this.board.row; i++) {
             for (int j = 0; j < this.board.col; j++) {
@@ -87,10 +77,11 @@ public class Node {
                 if (this.board.cells[i][j] == 0)
                     zeroCounter += 1;
 
-        return  sumOfCorners + zeroCounter + (0.1 * duplicateCounter);
+        return  sumOfCorners + zeroCounter + (duplicateCounter / 10);
     }
-    public double sum() {
-        return heuristic() - (0.9 * pathCost());
+
+    public int sum() {
+        return heuristic() - 12 * pathCost() / 10;
     }
 
     public String hash() {

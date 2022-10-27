@@ -35,23 +35,33 @@ public class main {
 
         Hashtable<String, Boolean> initHash = new Hashtable<>();
         Node start = new Node(gameBoard, null, NONE);
+
        // System.out.println("\nDFS Answer :");
         /*DFS dfs = new DFS();
         dfs.search(start);*/
+
         System.out.println("\nBFS Answer :");
         BFS bfs = new BFS();
         bfs.search(start);
+
         /*System.out.println("\nIDS Answer :");
         IDS ids = new IDS();
         ids.search(start);
+
         System.out.println("\nUCS Answer :");
         UCS ucs = new UCS();
         ucs.search(start);*/
-        System.out.println("\nASTAR Answer :");
-        ASTAR astar = new ASTAR();
+
+        System.out.println("\nAStar Answer :");
+        AStar astar = new AStar();
         astar.search(start);
+
         System.out.println("\nGBFS Answer :");
         GBFS gbfs = new GBFS();
         gbfs.search(start);
+
+        System.out.println("\nIDSStar Answer :");
+        IDAStar idastar = new IDAStar();
+        idastar.search(start);
     }
 }

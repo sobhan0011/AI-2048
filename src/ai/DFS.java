@@ -11,7 +11,7 @@ public class DFS {
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
         Hashtable<String, Boolean> inExplore = new Hashtable<>();
         if (startNode.isGoal()) {
-            System.out.println("you win!");
+            System.out.println("you win !!!");
             printResult(startNode, 0);
             return;
         }

@@ -7,14 +7,14 @@ import java.util.Hashtable;
 import java.util.PriorityQueue;
 
 
-public class ASTAR {
+public class AStar {
 
     public void search(Node startNode) {
-        PriorityQueue<Node> frontier = new PriorityQueue<>(100, Comparator.comparingDouble(Node::sum).reversed());
+        PriorityQueue<Node> frontier = new PriorityQueue<>(100, Comparator.comparingInt(Node::sum).reversed());
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
         int whileCounter = 0;
         if (startNode.isGoal()) {
-            System.out.println("you win!");
+            System.out.println("you win !!!");
             printResult(startNode, 0);
             return;
         }

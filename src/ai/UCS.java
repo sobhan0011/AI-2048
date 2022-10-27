@@ -12,7 +12,7 @@ public class UCS {
     public void search(Node startNode) {
         PriorityQueue<Node> frontier = new PriorityQueue<>(100, Comparator.comparingInt(Node::pathCost));
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
-
+        int whileCounter = 0;
         if (startNode.isGoal()) {
             System.out.println("you win!");
             printResult(startNode, 0);
@@ -21,6 +21,7 @@ public class UCS {
         frontier.add(startNode);
         inFrontier.put(startNode.hash(), true);
         while (!frontier.isEmpty()) {
+            whileCounter += 1;
             Node temp = frontier.poll();
             inFrontier.remove(temp.hash());
             ArrayList<Node> children = temp.successor();
@@ -28,7 +29,7 @@ public class UCS {
                 if (!(inFrontier.containsKey(child.hash()))) {
                     if (child.isGoal()) {
                         printResult(child, 0);
-                        System.out.println("you win !!!");
+                        System.out.println("you win !!!" + whileCounter);
                         return;
                     }
                     frontier.add(child);

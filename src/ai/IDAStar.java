@@ -4,14 +4,14 @@ import model.Node;
 
 import java.util.*;
 
-public class IDS{
+public class IDAStar {
 
     public void search(Node startNode) {
         Stack<Node> frontier = new Stack<>();
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
-        int whileCounter = 0;
+        int whileCounter = 0, cutOff = startNode.sum();
         try {
-            for (int i = 0;; i++) {
+            while (true) {
                 frontier.add(startNode);
                 inFrontier.put(startNode.hash(), true);
                 while (!frontier.isEmpty()) {
@@ -23,7 +23,7 @@ public class IDS{
                         printResult(temp, 0);
                         return;
                     }
-                    if (depthCounter(temp, 0) + 1 > i)
+                    if (temp.sum() > cutOff)
                         continue;
                     ArrayList<Node> children = temp.successor();
                     for (Node child : children)
@@ -31,6 +31,7 @@ public class IDS{
                             frontier.add(child);
                             inFrontier.put(child.hash(), true);
                         }
+                    cutOff = frontier.stream().min()
                 }
             }
         }
