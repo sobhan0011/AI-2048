@@ -9,7 +9,8 @@ public class IDAStar {
     public void search(Node startNode) {
         Stack<Node> frontier = new Stack<>();
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
-        int whileCounter = 0, cutOff = startNode.sum();
+        int whileCounter = 0;
+        int cutOff = startNode.sum();
         try {
             while (true) {
                 frontier.add(startNode);
@@ -23,15 +24,16 @@ public class IDAStar {
                         printResult(temp, 0);
                         return;
                     }
-                    if (temp.sum() > cutOff)
+                    if (temp.sum() > cutOff) {
                         continue;
+                    }
                     ArrayList<Node> children = temp.successor();
                     for (Node child : children)
                         if (!(inFrontier.containsKey(child.hash()))) {
                             frontier.add(child);
                             inFrontier.put(child.hash(), true);
                         }
-                    cutOff = frontier.stream().min()
+                    cutOff = getMinFrontier(frontier);
                 }
             }
         }
@@ -56,6 +58,16 @@ public class IDAStar {
             return depthCounter;
         depthCounter = depthCounter(node.getParent(), depthCounter + 1);
         return depthCounter;
+    }
+
+    public int getMinFrontier(Stack<Node> tmp){
+        ArrayList<Integer> arrayList = new ArrayList<>() ;
+        Iterator<Node> iterator = tmp.iterator();
+        while (iterator.hasNext()){
+            arrayList.add(iterator.next().sum());
+        }
+        Collections.sort(arrayList);
+        return arrayList.get(0);
     }
 
 

@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.function.ToIntFunction;
 
-public class Node {
+public class Node  {
     Board board;
     Node parent;
     Movement previousMovement;
@@ -45,14 +46,26 @@ public class Node {
     public int pathCost() {
         if (this.getParent() == null)
             return 0;
-        int value = switch (this.previousMovement) {
-            case LEFT -> 1;
-            case RIGHT -> 3;
-            case DOWN -> 5;
-            default -> 7;
+        int value;
+        switch (this.previousMovement) {
+            case LEFT:
+                value = 1;
+                break;
+            case RIGHT:
+                value = 3;
+                break;
+            case DOWN:
+                value = 5;
+                break;
+            default:
+                value = 7;
         };
         return this.getParent().pathCost() + value;
     }
+
+//    public int getMin(){
+//
+//    }
 
     public int heuristic() {
         Map<Integer, Integer> map = new HashMap<>();
@@ -84,6 +97,7 @@ public class Node {
         return heuristic() - 12 * pathCost() / 10;
     }
 
+
     public String hash() {
         StringBuilder hash = new StringBuilder();
         hash.append(board.hash()).append("/PM=").append(previousMovement.toString());
@@ -92,7 +106,10 @@ public class Node {
 
     private String spaceRequired(int cell) {
         int length = String.valueOf(cell).length();
-        String result = " ".repeat(5 - length);
+        String result ="";
+        for (int i = 0; i < 5-length ; i++) {
+            result += " ";
+        }
         result += " ";
         return result;
     }
