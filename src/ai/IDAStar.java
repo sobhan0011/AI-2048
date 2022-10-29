@@ -9,8 +9,9 @@ public class IDAStar {
     public void search(Node startNode) {
         Stack<Node> frontier = new Stack<>();
         Hashtable<String, Boolean> inFrontier = new Hashtable<>();
-        int whileCounter = 0;
+        int whileCounter = 0, tempSum;
         int cutOff = startNode.sum();
+        ArrayList<Integer> sums = new ArrayList<>();
         try {
             while (true) {
                 frontier.add(startNode);
@@ -18,13 +19,15 @@ public class IDAStar {
                 while (!frontier.isEmpty()) {
                     whileCounter += 1;
                     Node temp = frontier.pop();
+                    tempSum = temp.sum();
+                    sums.add(tempSum);
                     inFrontier.remove(temp.hash());
                     if (temp.isGoal()) {
                         System.out.println("you win !!! " + whileCounter);
                         printResult(temp, 0);
                         return;
                     }
-                    if (temp.sum() > cutOff) {
+                    if (tempSum < cutOff) {
                         continue;
                     }
                     ArrayList<Node> children = temp.successor();
@@ -33,8 +36,8 @@ public class IDAStar {
                             frontier.add(child);
                             inFrontier.put(child.hash(), true);
                         }
-                    cutOff = getMinFrontier(frontier);
                 }
+                cutOff = updateCutOff(sums, cutOff);
             }
         }
         catch (StackOverflowError error) {
@@ -53,22 +56,14 @@ public class IDAStar {
         printResult(node.getParent(), depthCounter + 1);
     }
 
-    public int depthCounter(Node node, int depthCounter) {
-        if (node.getParent() == null)
-            return depthCounter;
-        depthCounter = depthCounter(node.getParent(), depthCounter + 1);
-        return depthCounter;
-    }
 
-    public int getMinFrontier(Stack<Node> tmp){
-        ArrayList<Integer> arrayList = new ArrayList<>() ;
-        Iterator<Node> iterator = tmp.iterator();
-        while (iterator.hasNext()){
-            arrayList.add(iterator.next().sum());
+    public int updateCutOff(ArrayList<Integer> sums, int cutOff){
+        Collections.sort(sums);
+        for (int i = sums.size() - 1; i >= 0; i--) {
+            if (sums.get(i) < cutOff)
+                return sums.get(i);
         }
-        Collections.sort(arrayList);
-        return arrayList.get(0);
+        return 0;
     }
-
 
 }

@@ -63,9 +63,6 @@ public class Node  {
         return this.getParent().pathCost() + value;
     }
 
-//    public int getMin(){
-//
-//    }
 
     public int heuristic() {
         Map<Integer, Integer> map = new HashMap<>();

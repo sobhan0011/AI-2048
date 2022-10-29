@@ -60,7 +60,7 @@ public class main {
         GBFS gbfs = new GBFS();
         gbfs.search(start);
 
-        System.out.println("\nIDSStar Answer :");
+        System.out.println("\nIDAStar Answer :");
         IDAStar idastar = new IDAStar();
         idastar.search(start);
     }
