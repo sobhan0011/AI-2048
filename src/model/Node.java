@@ -87,7 +87,7 @@ public class Node  {
                 if (this.board.cells[i][j] == 0)
                     zeroCounter += 1;
 
-        return  sumOfCorners + zeroCounter + (duplicateCounter / 10);
+        return  (sumOfCorners / 5) + zeroCounter + (duplicateCounter / 5);
     }
 
     public int sum() {
